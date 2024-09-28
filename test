@@ -1,0 +1,51 @@
+<script setup>
+import { ref } from 'vue';
+
+// Fetch users on load
+const { data: users, error } = await useFetch('/api/users');
+
+// Form input refs
+const newName = ref('');
+const newEmail = ref('');
+const newPassowrd = ref('');
+ 
+const addUser = async () => {
+  try { 
+    const response = await $fetch('/api/users', {
+      method: 'POST',
+      body: { name: newName.value, email: newEmail.value, password: newPassowrd.value }
+    });
+ 
+    if (response) {
+      const { data: updatedUsers } = await useFetch('/api/users');
+      users.value = updatedUsers;
+    }
+ 
+    newName.value = '';
+    newEmail.value = '';
+  } catch (err) {
+    console.error('Error adding user:', err);
+  }
+};
+</script>
+
+<template>
+  <div>
+    <h1>User List</h1>
+
+    <!-- Form for adding new user -->
+    <h2>Add New User</h2>
+    <form @submit.prevent="addUser">
+      <input v-model="newName" placeholder="Name" required />
+      <input v-model="newEmail" type="email" placeholder="Email" required />
+      <input v-model="newPassowrd" type="password" placeholder="Password" required />
+      <button type="submit">Add User</button>
+    </form>
+
+    <!-- List of users -->
+    <ul v-if="users">
+      <li v-for="user in users" :key="user.id">{{ user.name }} - {{ user.email }}</li>
+    </ul>
+    <p v-if="error">Error loading users</p>
+  </div>
+</template>

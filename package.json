@@ -1,0 +1,21 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@next/env": "^14.2.13",
+    "@vercel/postgres": "^0.10.0",
+    "bcrypt": "^5.1.1",
+    "nuxt": "^3.13.0",
+    "pg": "^8.13.0",
+    "vue": "latest",
+    "vue-router": "latest"
+  }
+}
